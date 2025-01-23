@@ -4,14 +4,18 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] public int actionPoints;
     void Start()
     {
-        
+
     }
 
     void Update()
     {
-        CheckforMovement();
+        if (GameManager.Instance.IsPlayerTurn)
+        {
+            CheckforMovement();
+        }
     }
     void CheckforMovement()
     {
@@ -39,6 +43,10 @@ public class Player : MonoBehaviour
         {
             Debug.LogWarning("Tile " + (transform.position.x + movement.x) + "," + (transform.position.z + movement.z) + " is already occupied or a wall");
         }
+        else if (actionPoints <= 0)
+        {
+            Debug.LogWarning("Out Of ActionPoints");
+        }
         else
         {
             Move(movement);
@@ -52,5 +60,7 @@ public class Player : MonoBehaviour
         transform.position += movement;
         //set new position occupied
         GameManager.Instance.gridHandler.SetIsNodeOccupied((int)transform.position.x,(int)transform.position.z, true);
+        //reduce action points by 1
+        actionPoints--;
     }
 }
