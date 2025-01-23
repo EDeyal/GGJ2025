@@ -1,14 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoSingleton<GameManager>   
 {
-    [SerializeField] PlayerManager playerManager;
-    [SerializeField] GridHandler gridHandler;
+    [SerializeField] public PlayerManager playerManager;
+    [SerializeField] public GridHandler gridHandler;
     private void Start()
     {
         gridHandler.SpawnFloor();
         playerManager.SpawnPlayer();
+    }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(0);
+        }
     }
 }

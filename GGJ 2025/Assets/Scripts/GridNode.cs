@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GridNode : MonoBehaviour
 {
-    bool _isOccupied;
+    public bool isOccupied = false;
     bool _isHighlighted;
     [SerializeField] GameObject _floor;
     Renderer _renderer;
@@ -19,7 +19,6 @@ public class GridNode : MonoBehaviour
 
     public void HighlightFloor(bool isHighlighted,Color color)
     {
-
         _renderer.material.color = color;
     }
 }
