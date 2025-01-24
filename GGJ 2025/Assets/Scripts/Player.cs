@@ -137,4 +137,17 @@ public class Player : MonoBehaviour
             ability.ReduceCooldown();
         }
     }
+    public bool ReduceActionPoints(int amount)
+    {
+        if (ActionPoints >= amount)
+        {
+            _actionPoints -= amount;
+            GameManager.Instance.uiManager.UpdatePlayerActionText(_actionPoints);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }

@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] AbilityUiHandler abilityUIPrefab;
     [SerializeField] GameObject abilitiesUiHolder;
     [SerializeField] List<AbilityUiHandler> abilitiesUI;
+    [SerializeField] GameObject NotEnoughActionPoints;
 
     public void UpdatePlayerActionText(int currentAmount)
     {
@@ -32,13 +33,19 @@ public class UIManager : MonoBehaviour
         {
             go = enemyTurn;
         }
-            StartCoroutine(SwapTurn(go));
+            StartCoroutine(Popup(go));
     }
 
-    IEnumerator SwapTurn(GameObject go)
+    IEnumerator Popup(GameObject go)
     {
         go.SetActive(true);
         yield return new WaitForSeconds(0.5f);
+        go.SetActive(false);
+    }
+    IEnumerator Popup(GameObject go,float time)
+    {
+        go.SetActive(true);
+        yield return new WaitForSeconds(time);
         go.SetActive(false);
     }
 
@@ -59,5 +66,9 @@ public class UIManager : MonoBehaviour
         var abilityUI = Instantiate(abilityUIPrefab, abilitiesUiHolder.transform);
         abilitiesUI.Add(abilityUI);
         abilityUI.ActivateAbility(ability, id);
+    }
+    public void NotEnoughActionPointsPopup()
+    {
+        StartCoroutine(Popup(NotEnoughActionPoints,1));
     }
 }
