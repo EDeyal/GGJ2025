@@ -24,7 +24,7 @@ public class Ability : MonoBehaviour
         if(_currentCooldown > 0)
             _currentCooldown--;
     }
-    public void ActivateAbility()
+    public void ActivateAbilityCooldown()
     {
         _currentCooldown = abilityCooldown;
     }

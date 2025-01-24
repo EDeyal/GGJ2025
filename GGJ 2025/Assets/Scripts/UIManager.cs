@@ -16,6 +16,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject abilitiesUiHolder;
     [SerializeField] List<AbilityUiHandler> abilitiesUI;
     [SerializeField] GameObject NotEnoughActionPoints;
+    [SerializeField] GameObject CanNotMove;
 
     public void UpdatePlayerActionText(int currentAmount)
     {
@@ -70,5 +71,10 @@ public class UIManager : MonoBehaviour
     public void NotEnoughActionPointsPopup()
     {
         StartCoroutine(Popup(NotEnoughActionPoints,1));
+    }
+    public void CanNotMovePopup()
+    {
+        StartCoroutine(Popup(CanNotMove, 1));
+
     }
 }

@@ -6,6 +6,7 @@ public class PlayerManager : MonoBehaviour
     Player _player;
     Ability SelectedAbility;
     bool isAbilitySelected;
+    public bool IsAbilitySelected => isAbilitySelected;
     [SerializeField] Ability _basicAbility;
     Ability ability2;
     Ability ability3;
@@ -47,14 +48,14 @@ public class PlayerManager : MonoBehaviour
     }
 
 
-    public void ExecuteAbility()
+    public void ExecuteAbility(Vector2 enemyPos)
     {
         Debug.Log("ExecuteAbility");
         if (player.ReduceActionPoints(SelectedAbility.abilityCost))
         {
             //Activate cooldowns for the ability
-            SelectedAbility.ActivateAbility();
-
+            SelectedAbility.ActivateAbilityCooldown();
+            GameManager.Instance.enemyManager.HitEnemy(enemyPos, SelectedAbility.damage);
             UnselectAbility();
         }
         else
@@ -65,6 +66,7 @@ public class PlayerManager : MonoBehaviour
     }
     void UnselectAbility()
     {
+        isAbilitySelected=false;
         Debug.Log("UnselectAbility");
         SelectedAbility = null;
         GameManager.Instance.gridHandler.UnshowAbilityRange();
@@ -77,9 +79,9 @@ public class PlayerManager : MonoBehaviour
 
             if (Input.GetMouseButtonDown(0))
             {
-                if(HitTarget())
+                if(HitTarget(out Vector2 gridLocation))
                 {
-                    ExecuteAbility();
+                    ExecuteAbility(gridLocation);
                 }
             }
             else if (Input.GetMouseButtonDown(1))
@@ -90,7 +92,7 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    bool HitTarget()
+    bool HitTarget(out Vector2 gridLocation)
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // Create a ray from the mouse position
         RaycastHit hit;
@@ -112,6 +114,7 @@ public class PlayerManager : MonoBehaviour
                     if (tile.isOccupied)
                     {
                         Debug.Log("Tile component found: " + tile.name);
+                        gridLocation = new Vector2(tile.xPos,tile.yPos);
                         return true;
                     }
                     else
@@ -133,6 +136,7 @@ public class PlayerManager : MonoBehaviour
         {
             Debug.Log("Raycast didn't hit any object on the specified layer.");
         }
+        gridLocation = new Vector2( -1,-1);
         return false;
     }
 }

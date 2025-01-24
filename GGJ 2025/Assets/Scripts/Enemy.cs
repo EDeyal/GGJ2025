@@ -10,10 +10,13 @@ public class Enemy : MonoBehaviour
    public int ActionPoints => _actionPoints;
    [SerializeField] public int attackRange = 1;
    [SerializeField] public int attackDamage = 1;
+   private int _health;
+   [SerializeField] private int _maxHealth;
 
     private void Awake()
     {
         RefreshActionPoints();
+        _health = _maxHealth;
     }
     public void RefreshActionPoints()
     {
@@ -47,5 +50,24 @@ public class Enemy : MonoBehaviour
         gm.gridHandler.SetIsNodeOccupied((int)transform.position.x, (int)transform.position.z, true);
         //reduce action points by 1
         _actionPoints -= 1;
+    }
+    public void ChangeHealth(int amount)
+    {
+        if (_health + amount > _maxHealth)
+            _health = _maxHealth;
+        else if (_health + amount <= 0)
+        {
+            _health = 0;
+            GameManager.Instance.enemyManager.KillEnemy(this);
+        }
+        else
+        {
+            _health += amount;
+        }
+        GameManager.Instance.uiManager.UpdatePlayerHealth();
+    }
+    private void OnDestroy()
+    {
+        GameManager.Instance.gridHandler.UnoccupyTile(new Vector2(transform.position.x,transform.position.z));
     }
 }

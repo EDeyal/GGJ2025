@@ -62,24 +62,44 @@ public class Player : MonoBehaviour
     }
     void CheckforMovement()
     {
+
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
+            if (GameManager.Instance.playerManager.IsAbilitySelected)
+            {
+                GameManager.Instance.uiManager.CanNotMovePopup();
+                return;
+            }
             TryMove(new Vector3(0, 0, 1));
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
+            if (GameManager.Instance.playerManager.IsAbilitySelected)
+            {
+                GameManager.Instance.uiManager.CanNotMovePopup();
+                return;
+            }
             TryMove(new Vector3(0, 0, -1));
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
         {
+            if (GameManager.Instance.playerManager.IsAbilitySelected)
+            {
+                GameManager.Instance.uiManager.CanNotMovePopup();
+                return;
+            }
             TryMove(new Vector3(-1, 0, 0));
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
         {
+            if (GameManager.Instance.playerManager.IsAbilitySelected)
+            {
+                GameManager.Instance.uiManager.CanNotMovePopup();
+                return;
+            }
             TryMove(new Vector3(1, 0, 0));
         }
     }
-
     void TryMove(Vector3 movement)
     {
         if (GameManager.Instance.gridHandler.CheckIsNodeOccupied((int)(transform.position.x + movement.x), (int)(transform.position.z + movement.z)))

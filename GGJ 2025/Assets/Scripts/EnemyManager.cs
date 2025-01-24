@@ -139,5 +139,27 @@ public class EnemyManager : MonoBehaviour
             });
         _enemyList = enemiesToSort;
     }
-
+    public void HitEnemy(Vector2 enemyPos, int damage)
+    {
+        Enemy enemy = GetEnemyFromPos(enemyPos);
+        enemy.ChangeHealth(-damage);
+        Debug.Log("EnemyIsHit");
+    }
+    Enemy GetEnemyFromPos(Vector2 enemyPos)
+    {
+        foreach (var enemy in _enemyList)
+        {
+            if (enemy.transform.position.x == enemyPos.x && enemy.transform.position.z == enemyPos.y)
+            {
+                return enemy;
+            }
+        }
+        return null;
+    }
+    public void KillEnemy(Enemy enemy)
+    {
+        //deathEffect in enemy location
+        _enemyList.Remove(enemy);
+        Destroy(enemy.gameObject);
+    }
 }

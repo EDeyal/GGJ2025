@@ -49,6 +49,7 @@ MonoBehaviour:
   maxActionPoints: 1
   attackRange: 1
   attackDamage: 1
+  _maxHealth: 1
 --- !u!1 &5720994717350117712
 GameObject:
   m_ObjectHideFlags: 0
