@@ -66,6 +66,7 @@ public class EnemyManager : MonoBehaviour
             if (Vector3.Distance(enemy.transform.position, playerPos) <= enemy.attackRange)
             {
                 Debug.Log(enemy.gameObject.name + "AttacksPlayer");
+                GameManager.Instance.playerManager.player.ChangeHealth(-enemy.attackDamage);
             }
         }
     }

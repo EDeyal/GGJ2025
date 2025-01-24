@@ -6,6 +6,27 @@ public class Player : MonoBehaviour
 {
     [SerializeField] public int maxActionPoints;
     private int _actionPoints = 0;
+    private int _health = 0;
+    public int Health => _health;
+    [SerializeField] private int _maxHealth = 0;
+    public bool isPlayerDead;
+
+    public void ChangeHealth(int amount)
+    {
+        if (_health + amount > _maxHealth)
+            _health = _maxHealth;
+        else if (_health + amount <= 0)
+        {
+            _health = 0;
+            GameManager.Instance.GameOver();
+        }
+        else
+        {
+            _health += amount;
+        }
+        GameManager.Instance.uiManager.UpdatePlayerHealth();
+    }
+
     public int ActionPoints {
         get
         {
@@ -20,13 +41,17 @@ public class Player : MonoBehaviour
     void Awake()
     {
         RefreshActionPoints();
+        _health = _maxHealth;
     }
 
     void Update()
     {
-        if (GameManager.Instance.IsPlayerTurn)
+        if (!isPlayerDead)
         {
-            CheckforMovement();
+            if (GameManager.Instance.IsPlayerTurn)
+            {
+                CheckforMovement();
+            }
         }
     }
     void CheckforMovement()

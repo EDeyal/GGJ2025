@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
    private int _actionPoints;
    public int ActionPoints => _actionPoints;
    [SerializeField] public int attackRange = 1;
+   [SerializeField] public int attackDamage = 1;
 
     private void Awake()
     {

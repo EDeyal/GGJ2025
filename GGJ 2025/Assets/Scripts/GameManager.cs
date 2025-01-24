@@ -14,6 +14,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         gridHandler.SpawnFloor();
         playerManager.SpawnPlayer();
+        uiManager.UpdatePlayerHealth();
         gridHandler.UpdateEnemySpawnPositions();
         enemyManager.SpawnEnemies();
     }
@@ -21,7 +22,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            SceneManager.LoadScene(0);
+            RestartGame();
         }
         if (Input.GetKeyDown(KeyCode.K))
         {
@@ -85,5 +86,15 @@ public class GameManager : MonoSingleton<GameManager>
         //move if can
         enemyManager.EnemyMovement();
         SwapTurn();
+    }
+    public void RestartGame()
+    {
+        playerManager.player.isPlayerDead = false;
+        SceneManager.LoadScene(0);
+    }
+    public void GameOver()
+    {
+        uiManager.GameOver();
+        playerManager.player.isPlayerDead = true;
     }
 }
