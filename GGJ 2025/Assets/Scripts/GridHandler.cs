@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class GridHandler : MonoBehaviour
@@ -79,4 +80,47 @@ public class GridHandler : MonoBehaviour
         }
         return enemySpawnablePositions[randomIndex];
     }
+    public void ShowAbilityRange(int xPos, int yPos,int abilityRange)
+    {
+        List<GridNode> nodesInRange = new List<GridNode>();
+
+        foreach (var node in grid)
+        {
+            float distance = Vector3.Distance(new Vector2(xPos, yPos), new Vector2(node.transform.position.x,node.transform.position.z));
+            if (Mathf.Approximately(distance, 1f))
+            {
+                nodesInRange.Add(node);
+            }
+        }
+
+        foreach (var node in nodesInRange)
+        {
+            node.HighlightFloor(true, Color.red);
+        }
+    }
+    public void UnshowAbilityRange()
+    {
+        foreach (var node in grid)
+        {
+            node.HighlightFloor(false, Color.gray);
+        }
+    }
+    //public List<Node> GetNodesOneTileAway(Vector3 playerPosition, List<Node> allNodes)
+    //{
+    //    List<Node> nodesOneTileAway = new List<Node>();
+
+    //    foreach (Node node in allNodes)
+    //    {
+    //        // Calculate the distance between the player's position and the node
+    //        float distance = Vector3.Distance(playerPosition, node.position);
+
+    //        // Check if the distance is exactly 1 tile (adjust for grid-based calculations)
+    //        if (Mathf.Approximately(distance, 1f))
+    //        {
+    //            nodesOneTileAway.Add(node);
+    //        }
+    //    }
+
+    //    return nodesOneTileAway;
+    //}
 }

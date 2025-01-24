@@ -10,7 +10,17 @@ public class Player : MonoBehaviour
     public int Health => _health;
     [SerializeField] private int _maxHealth = 0;
     public bool isPlayerDead;
-
+    public List<Ability> abilities;
+    void Awake()
+    {
+        abilities = new List<Ability>();
+        RefreshActionPoints();
+        _health = _maxHealth;
+    }
+    public int GetLatestAbilityID()
+    {
+        return abilities.Count - 1;
+    }
     public void ChangeHealth(int amount)
     {
         if (_health + amount > _maxHealth)
@@ -38,11 +48,7 @@ public class Player : MonoBehaviour
             //Debug.Log("Action Points changed" + ActionPoints);
         }
         }
-    void Awake()
-    {
-        RefreshActionPoints();
-        _health = _maxHealth;
-    }
+
 
     void Update()
     {
@@ -123,5 +129,12 @@ public class Player : MonoBehaviour
         if (ActionPoints == 0)
             return true;
         return false;
+    }
+    public void ReduceAbilitiesCooldown()
+    {
+        foreach (var ability in abilities)
+        {
+            ability.ReduceCooldown();
+        }
     }
 }

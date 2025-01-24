@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject playerTurn;
     [SerializeField] GameObject enemyTurn;
     [SerializeField] GameObject gameOver;
+    [SerializeField] AbilityUiHandler abilityUIPrefab;
+    [SerializeField] GameObject abilitiesUiHolder;
+    [SerializeField] List<AbilityUiHandler> abilitiesUI;
+
     public void UpdatePlayerActionText(int currentAmount)
     {
         playerActionPoints.text = currentAmount.ToString();
@@ -48,5 +53,11 @@ public class UIManager : MonoBehaviour
             playerHealthText = GameManager.Instance.playerManager.player.GetComponentInChildren<TextMeshPro>();
         }
         playerHealthText.text = GameManager.Instance.playerManager.player.Health.ToString();
+    }
+    public void AddAbility(Ability ability, int id)
+    {
+        var abilityUI = Instantiate(abilityUIPrefab, abilitiesUiHolder.transform);
+        abilitiesUI.Add(abilityUI);
+        abilityUI.ActivateAbility(ability, id);
     }
 }

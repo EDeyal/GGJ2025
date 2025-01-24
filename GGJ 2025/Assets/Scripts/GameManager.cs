@@ -60,7 +60,7 @@ public class GameManager : MonoSingleton<GameManager>
         { 
             //Set to player turn
             IsPlayerTurn=true;
-            playerManager.player.RefreshActionPoints();
+            playerManager.StartPlayerTurn();
             //player ui start turn
             uiManager.SwapTurn(true);
         }
