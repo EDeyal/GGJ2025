@@ -9,12 +9,14 @@ public class PlayerManager : MonoBehaviour
     public bool IsAbilitySelected => isAbilitySelected;
     [SerializeField] Ability _basicAbility;
     Ability ability2;
-    Ability ability3;
     public Player player
     {
         get { return _player; }
     }
-
+    public void UnlockSecondAbility()
+    {
+        AddAbility(ability2);
+    }
     public void SpawnPlayer()
     {
         _player = Instantiate(playerPrefab, new Vector3(0, 1, 0), Quaternion.identity);
@@ -50,7 +52,7 @@ public class PlayerManager : MonoBehaviour
 
     public void ExecuteAbility(Vector2 enemyPos)
     {
-        Debug.Log("ExecuteAbility");
+        //Debug.Log("ExecuteAbility");
         if (player.ReduceActionPoints(SelectedAbility.abilityCost))
         {
             //Activate cooldowns for the ability
@@ -67,7 +69,7 @@ public class PlayerManager : MonoBehaviour
     void UnselectAbility()
     {
         isAbilitySelected=false;
-        Debug.Log("UnselectAbility");
+        //Debug.Log("UnselectAbility");
         SelectedAbility = null;
         GameManager.Instance.gridHandler.UnshowAbilityRange();
 

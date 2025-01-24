@@ -23,11 +23,20 @@ public class GridHandler : MonoBehaviour
         }
         grid = new GridNode[gridMaxX, gridMaxY];
     }
-
-    // Update is called once per frame
-    void Update()
+    public void IncreaseGridSize(int gridX, int gridY)
     {
-        
+        gridMaxX += gridX;
+        gridMaxY += gridY;
+        UnspawnFloor();
+        SpawnFloor();
+        UpdateEnemySpawnPositions();
+    }
+    void UnspawnFloor()
+    {
+        foreach (var tile in grid)
+        {
+            Destroy(tile.gameObject);
+        }
     }
     public void SpawnFloor()
     {

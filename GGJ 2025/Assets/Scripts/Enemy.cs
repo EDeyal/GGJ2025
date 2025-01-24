@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+   [SerializeField] public int enemyID;
    [SerializeField] public int enemyStrength = 1;
    [SerializeField] public int maxActionPoints = 1;
    private int _actionPoints;
@@ -17,6 +18,14 @@ public class Enemy : MonoBehaviour
     {
         RefreshActionPoints();
         _health = _maxHealth;
+    }
+    public void IncreaseHealth(int amount)
+    {
+        _maxHealth += amount;
+    }
+    public void IncreaseDamage(int amount)
+    {
+        attackDamage += amount;
     }
     public void RefreshActionPoints()
     {

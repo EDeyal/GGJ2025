@@ -18,8 +18,38 @@ public class EnemyManager : MonoBehaviour
         _enemyTypes.Add(basicEnemyPrefab);
         _currentEnemyStrength = StartingEnemyStrength;
     }
+    public void IncreaseEnemyDamage(int ID, int damageAmount)
+    {
+        foreach (var enemy in _enemyTypes)
+        {
+            if (enemy.enemyID == ID)
+            { 
+                enemy.IncreaseDamage(damageAmount);
+            }
+        }
+    }
+    public void IncreaseEnemyHealth(int ID, int healthAmount)
+    {
+        foreach (var enemy in _enemyTypes)
+        {
+            if (enemy.enemyID == ID)
+            {
+                enemy.IncreaseHealth(healthAmount);
+            }
+        }
+    }
+    public void AddEnemyType(Enemy enemy)
+    {
+        _enemyTypes.Add(enemy);
+    }
+    public void IncreaseEnemyStrength(int amount)
+    { 
+        _currentEnemyStrength += amount;
+    }
     public void SpawnEnemies()
     {
+        GameManager.Instance.currentWave += 1;
+        GameManager.Instance.uiManager.UpdateWave();
         _enemyStrengthToSpawn = _currentEnemyStrength;
         while (_enemyStrengthToSpawn > 0)
         {
@@ -143,7 +173,7 @@ public class EnemyManager : MonoBehaviour
     {
         Enemy enemy = GetEnemyFromPos(enemyPos);
         enemy.ChangeHealth(-damage);
-        Debug.Log("EnemyIsHit");
+        //Debug.Log("EnemyIsHit");
     }
     Enemy GetEnemyFromPos(Vector2 enemyPos)
     {
@@ -161,5 +191,13 @@ public class EnemyManager : MonoBehaviour
         //deathEffect in enemy location
         _enemyList.Remove(enemy);
         Destroy(enemy.gameObject);
+        CheckIfWaveIsOver();
+    }
+    void CheckIfWaveIsOver()
+    {
+        if (_enemyList.Count <= 0)
+        {
+            GameManager.Instance.WaveEnded();
+        }
     }
 }

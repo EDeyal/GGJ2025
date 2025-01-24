@@ -17,6 +17,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] List<AbilityUiHandler> abilitiesUI;
     [SerializeField] GameObject NotEnoughActionPoints;
     [SerializeField] GameObject CanNotMove;
+    [SerializeField] TextMeshProUGUI WaveCounterText;
 
     public void UpdatePlayerActionText(int currentAmount)
     {
@@ -75,6 +76,10 @@ public class UIManager : MonoBehaviour
     public void CanNotMovePopup()
     {
         StartCoroutine(Popup(CanNotMove, 1));
-
+    }
+    public void UpdateWave()
+    {
+        Debug.Log("Wave Updated");
+        WaveCounterText.text = "Wave: " + GameManager.Instance.currentWave.ToString();
     }
 }

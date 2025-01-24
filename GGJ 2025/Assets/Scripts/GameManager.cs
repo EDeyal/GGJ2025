@@ -9,7 +9,9 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField] public GridHandler gridHandler;
     [SerializeField] public EnemyManager enemyManager;
     [SerializeField] public UIManager uiManager;
+    [SerializeField] public WaveUpgradeHandler waveUpgradeHandler;
     public bool IsPlayerTurn = true;
+    public int currentWave = 0;
     private void Start()
     {
         gridHandler.SpawnFloor();
@@ -96,5 +98,10 @@ public class GameManager : MonoSingleton<GameManager>
     {
         uiManager.GameOver();
         playerManager.player.isPlayerDead = true;
+    }
+    public void WaveEnded()
+    {
+        gridHandler.UpdateEnemySpawnPositions();
+        enemyManager.SpawnEnemies();
     }
 }
