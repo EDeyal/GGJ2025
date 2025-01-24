@@ -14,4 +14,9 @@ public class EnemyStrengthUpgrade : WaveUpgrade
     {
         return true;
     }
+
+    public override string Description()
+    {
+        return "Increase enemy total strength by: " + _strengthIncreaseAmount;
+    }
 }

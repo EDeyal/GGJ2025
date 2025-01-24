@@ -21,4 +21,9 @@ public class NewEnemyUpgrade : WaveUpgrade
         }
         return true;
     }
+
+    public override string Description()
+    {
+        return "A new enemy type appears";
+    }
 }

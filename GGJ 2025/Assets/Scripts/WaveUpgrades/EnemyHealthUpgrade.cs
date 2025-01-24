@@ -15,4 +15,9 @@ public class EnemyHealthUpgrade : WaveUpgrade
     {
         return true;
     }
+
+    public override string Description()
+    {
+        return "Increase enemy no. " + _enemyID + " health by " + _healthAmount;
+    }
 }

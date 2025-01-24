@@ -18,6 +18,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject NotEnoughActionPoints;
     [SerializeField] GameObject CanNotMove;
     [SerializeField] TextMeshProUGUI WaveCounterText;
+    [SerializeField] GameObject WaveUpgradesHolder;
 
     public void UpdatePlayerActionText(int currentAmount)
     {
@@ -81,5 +82,17 @@ public class UIManager : MonoBehaviour
     {
         Debug.Log("Wave Updated");
         WaveCounterText.text = "Wave: " + GameManager.Instance.currentWave.ToString();
+    }
+
+    public void ShowWaveUpgrades(bool isTrue)
+    {
+        if (isTrue)
+        {
+            WaveUpgradesHolder.SetActive(true);
+        }
+        else
+        {
+            WaveUpgradesHolder.SetActive(false);
+        }
     }
 }

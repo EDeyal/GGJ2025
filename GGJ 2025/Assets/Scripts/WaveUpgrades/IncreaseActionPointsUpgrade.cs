@@ -14,4 +14,9 @@ public class IncreaseActionPointsUpgrade : WaveUpgrade
     {
         return true;
     }
+
+    public override string Description()
+    {
+        return "Increase action point amount by " + _increaseAmount;
+    }
 }

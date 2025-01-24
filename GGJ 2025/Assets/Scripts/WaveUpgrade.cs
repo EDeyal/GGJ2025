@@ -6,4 +6,5 @@ public abstract class WaveUpgrade : MonoBehaviour
 {
     public abstract void Activate();
     public abstract bool CheckIsAvailable();
+    public abstract string Description();
 }

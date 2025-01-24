@@ -19,4 +19,9 @@ public class NewWeaponForPlayer : WaveUpgrade
         }
         return true;
     }
+
+    public override string Description()
+    {
+        return "Unlocks a new ability for the player";
+    }
 }

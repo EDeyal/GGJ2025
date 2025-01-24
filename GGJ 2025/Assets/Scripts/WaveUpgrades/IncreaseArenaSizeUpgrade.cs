@@ -15,4 +15,9 @@ public class IncreaseArenaSizeUpgrade : WaveUpgrade
     {
         return true;
     }
+
+    public override string Description()
+    {
+        return "Increases grid size by: " + _gridXIncrease + "," + _gridYIncrease;
+    }
 }

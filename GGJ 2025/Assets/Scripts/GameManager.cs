@@ -101,7 +101,15 @@ public class GameManager : MonoSingleton<GameManager>
     }
     public void WaveEnded()
     {
+        //set up wave upgrades for level
+        waveUpgradeHandler.AssignUpgrades();
+        waveUpgradeHandler.ShowUpgrades(true);
+    }
+    public void WaveUpgradeSelected()
+    {
+        waveUpgradeHandler.ShowUpgrades(false);
         gridHandler.UpdateEnemySpawnPositions();
         enemyManager.SpawnEnemies();
+
     }
 }

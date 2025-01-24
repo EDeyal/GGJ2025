@@ -16,4 +16,9 @@ public class EnemyDamageUpgrade : WaveUpgrade
     {
         return true;
     }
+
+    public override string Description()
+    {
+        return "Increase enemy no. " + _enemyID + " damage by " + _damageAmount;
+    }
 }

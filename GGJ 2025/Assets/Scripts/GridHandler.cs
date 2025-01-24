@@ -28,6 +28,7 @@ public class GridHandler : MonoBehaviour
         gridMaxX += gridX;
         gridMaxY += gridY;
         UnspawnFloor();
+        grid = new GridNode[gridMaxX, gridMaxY];
         SpawnFloor();
         UpdateEnemySpawnPositions();
     }
