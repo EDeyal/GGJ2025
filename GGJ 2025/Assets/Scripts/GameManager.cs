@@ -7,12 +7,15 @@ public class GameManager : MonoSingleton<GameManager>
 {
     [SerializeField] public PlayerManager playerManager;
     [SerializeField] public GridHandler gridHandler;
+    [SerializeField] public EnemyManager enemyManager;
     [SerializeField] public UIManager uiManager;
     public bool IsPlayerTurn = true;
     private void Start()
     {
         gridHandler.SpawnFloor();
         playerManager.SpawnPlayer();
+        gridHandler.UpdateEnemySpawnPositions();
+        enemyManager.SpawnEnemies();
     }
     private void Update()
     {

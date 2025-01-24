@@ -9,6 +9,7 @@ public class GridHandler : MonoBehaviour
     [SerializeField] public int gridMaxX;
     [SerializeField] public int gridMaxY;
     public GridNode[,] grid;
+    public List<GridNode> enemySpawnablePositions;
     void Awake()
     {
         if (gridMaxX == 0)
@@ -54,5 +55,28 @@ public class GridHandler : MonoBehaviour
     {
         //Debug.Log("Node " + x + y + " is occupied " + isOccupied);
         return grid[x, y].isOccupied = isOccupied;
+    }
+
+    public void UpdateEnemySpawnPositions()
+    {
+        foreach (var node in grid)
+        {
+            if (node.xPos == gridMaxX - 1 || node.yPos == gridMaxY - 1)
+            {
+                if (!enemySpawnablePositions.Contains(node))
+                { 
+                    enemySpawnablePositions.Add(node);
+                }
+            }
+        }
+    }
+    public GridNode GetSpawnableEnemyLocation()
+    {
+        int randomIndex = Random.Range(0, enemySpawnablePositions.Count);
+        if (enemySpawnablePositions[randomIndex].isOccupied)
+        {
+            return GetSpawnableEnemyLocation();
+        }
+        return enemySpawnablePositions[randomIndex];
     }
 }

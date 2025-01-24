@@ -229,6 +229,7 @@ MonoBehaviour:
     type: 3}
   gridMaxX: 4
   gridMaxY: 4
+  enemySpawnablePositions: []
 --- !u!4 &119453388
 Transform:
   m_ObjectHideFlags: 0
@@ -336,6 +337,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerManager: {fileID: 177541255}
   gridHandler: {fileID: 119453387}
+  enemyManager: {fileID: 1072685965}
   uiManager: {fileID: 1245914330}
   IsPlayerTurn: 1
 --- !u!1 &330585543
@@ -1028,6 +1030,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1008903401}
   m_CullTransparentMesh: 1
+--- !u!1 &1072685963
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1072685964}
+  - component: {fileID: 1072685965}
+  m_Layer: 0
+  m_Name: EnemyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1072685964
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1072685963}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1072685965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1072685963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9721f610ef99a0c4fbd3cdc0ffd80d55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  basicEnemyPrefab: {fileID: 7739628036258924342, guid: c066b500fd94f0d4bb39e723292dafa4,
+    type: 3}
+  StartingEnemyStrength: 4
 --- !u!1 &1245914325
 GameObject:
   m_ObjectHideFlags: 0
@@ -1699,6 +1748,7 @@ SceneRoots:
   - {fileID: 832575519}
   - {fileID: 279829181}
   - {fileID: 177541254}
+  - {fileID: 1072685964}
   - {fileID: 119453388}
   - {fileID: 649976661}
   - {fileID: 1245914329}
