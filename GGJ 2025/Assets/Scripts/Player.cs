@@ -120,15 +120,48 @@ public class Player : MonoBehaviour
     private void Move(Vector3 movement)
     {
         var gm = GameManager.Instance;
-        //clear previous position
-        gm.gridHandler.SetIsNodeOccupied((int)transform.position.x,(int)transform.position.z, false);
-        //move
-        transform.position += movement;
-        //set new position occupied
-        gm.gridHandler.SetIsNodeOccupied((int)transform.position.x,(int)transform.position.z, true);
-        //reduce action points by 1
+
+        // Clear previous position
+        gm.gridHandler.SetIsNodeOccupied((int)transform.position.x, (int)transform.position.z, false);
+
+        // Calculate target position
+        Vector3 targetPosition = transform.position + movement;
+
+        // Start coroutine to move and rotate smoothly
+        StartCoroutine(SmoothMoveAndRotate(targetPosition, movement, 0.5f)); // 0.5f = movement duration
+
+        // Set new position occupied after moving
+        gm.gridHandler.SetIsNodeOccupied((int)targetPosition.x, (int)targetPosition.z, true);
+
+        // Reduce action points by 1
         ActionPoints -= 1;
         gm.uiManager.UpdatePlayerActionText(ActionPoints);
+    }
+    private IEnumerator SmoothMoveAndRotate(Vector3 targetPosition, Vector3 movement, float duration)
+    {
+        Vector3 startPosition = transform.position;
+        Quaternion startRotation = transform.rotation;
+
+        // Calculate target rotation based on movement direction
+        Quaternion targetRotation = Quaternion.LookRotation(movement, Vector3.up);
+
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            // Interpolate position over time
+            transform.position = Vector3.Lerp(startPosition, targetPosition, elapsedTime / duration);
+
+            // Interpolate rotation over time
+            transform.rotation = Quaternion.Lerp(startRotation, targetRotation, elapsedTime / duration);
+
+            elapsedTime += Time.deltaTime;
+            yield return null; // Wait for the next frame
+        }
+
+        // Ensure the final position and rotation are set accurately
+        transform.position = targetPosition;
+        transform.rotation = targetRotation;
     }
     public void IncreaseActionPoints(int amount)
     {
