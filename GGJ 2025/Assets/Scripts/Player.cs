@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
     [SerializeField] public int maxActionPoints;
     private int _actionPoints = 0;
     private int _health = 0;
+    [SerializeField] private int _healthRegeneration = 0;
+    public int HealthRegeneration => _healthRegeneration;
     public int Health => _health;
     [SerializeField] private int _maxHealth = 0;
     public bool isPlayerDead;
@@ -169,5 +171,19 @@ public class Player : MonoBehaviour
         {
             return false;
         }
+    }
+    public void RegenerateHealth()
+    {
+        ChangeHealth(_healthRegeneration);
+    }
+    public void IncreaseHealthRegeneration(int amount)
+    {
+        _healthRegeneration += amount;
+        GameManager.Instance.uiManager.UpdatePlayerHealth();
+    }
+    public void IncreaseMaxHealth(int amount)
+    {
+        _maxHealth += amount;
+        ChangeHealth(amount);
     }
 }

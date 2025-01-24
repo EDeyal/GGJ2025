@@ -110,6 +110,7 @@ public class GameManager : MonoSingleton<GameManager>
         waveUpgradeHandler.ShowUpgrades(false);
         gridHandler.UpdateEnemySpawnPositions();
         enemyManager.SpawnEnemies();
-
+        playerManager.player.RefreshActionPoints();
+        playerManager.player.RegenerateHealth();
     }
 }

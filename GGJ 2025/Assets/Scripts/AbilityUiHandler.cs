@@ -19,6 +19,7 @@ public class AbilityUiHandler : MonoBehaviour
         isActivated = true;
         abilityImage.sprite = ability.abilitySprite;
         abilityID = id;
+        costText.text = ability.abilityCost.ToString();
     }
     public void UpdateCooldown(Ability ability)
     {

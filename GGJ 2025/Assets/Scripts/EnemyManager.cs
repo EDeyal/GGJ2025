@@ -11,11 +11,13 @@ public class EnemyManager : MonoBehaviour
     int _enemyStrengthToSpawn;
     List<Enemy> _enemyList;
     List<Enemy> _enemyTypes;
+    public List<Enemy> EnemyTypes => _enemyTypes;
     private void Awake()
     {
         _enemyList = new List<Enemy>();
         _enemyTypes = new List<Enemy>();
-        _enemyTypes.Add(basicEnemyPrefab);
+        var enemy = Instantiate(basicEnemyPrefab,transform);
+        _enemyTypes.Add(enemy);
         _currentEnemyStrength = StartingEnemyStrength;
     }
     public void IncreaseEnemyDamage(int ID, int damageAmount)
@@ -40,7 +42,8 @@ public class EnemyManager : MonoBehaviour
     }
     public void AddEnemyType(Enemy enemy)
     {
-        _enemyTypes.Add(enemy);
+        var newEnemy = Instantiate(enemy, transform);
+        _enemyTypes.Add(newEnemy);
     }
     public void IncreaseEnemyStrength(int amount)
     { 

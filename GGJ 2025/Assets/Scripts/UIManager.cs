@@ -8,7 +8,8 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI playerActionPoints;
-    [SerializeField] TextMeshPro playerHealthText;
+    [SerializeField] TextMeshProUGUI playerHealthText;
+    [SerializeField] TextMeshProUGUI playerHealthRegenerationText;
     [SerializeField] GameObject playerTurn;
     [SerializeField] GameObject enemyTurn;
     [SerializeField] GameObject gameOver;
@@ -58,11 +59,8 @@ public class UIManager : MonoBehaviour
     }
     public void UpdatePlayerHealth()
     {
-        if (playerHealthText == null)
-        {
-            playerHealthText = GameManager.Instance.playerManager.player.GetComponentInChildren<TextMeshPro>();
-        }
         playerHealthText.text = GameManager.Instance.playerManager.player.Health.ToString();
+        playerHealthRegenerationText.text = GameManager.Instance.playerManager.player.HealthRegeneration.ToString();
     }
     public void AddAbility(Ability ability, int id)
     {

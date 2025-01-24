@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cf6124955e81204382d47a51dbda8ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyID: 0
   enemyStrength: 1
   maxActionPoints: 1
   attackRange: 1

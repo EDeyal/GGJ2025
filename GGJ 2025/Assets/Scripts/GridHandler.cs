@@ -70,6 +70,7 @@ public class GridHandler : MonoBehaviour
 
     public void UpdateEnemySpawnPositions()
     {
+        enemySpawnablePositions.Clear();
         foreach (var node in grid)
         {
             if (node.xPos == gridMaxX - 1 || node.yPos == gridMaxY - 1)

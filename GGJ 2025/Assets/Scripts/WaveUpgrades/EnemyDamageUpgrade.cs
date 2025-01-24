@@ -14,7 +14,14 @@ public class EnemyDamageUpgrade : WaveUpgrade
 
     public override bool CheckIsAvailable()
     {
-        return true;
+        foreach (var enemyType in GameManager.Instance.enemyManager.EnemyTypes)
+        {
+            if(enemyType.enemyID == _enemyID)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public override string Description()
