@@ -52,7 +52,7 @@ public class GridHandler : MonoBehaviour
     }
     public bool SetIsNodeOccupied(int x, int y, bool isOccupied)
     {
-        Debug.Log("Node " + x + y + " is occupied " + isOccupied);
+        //Debug.Log("Node " + x + y + " is occupied " + isOccupied);
         return grid[x, y].isOccupied = isOccupied;
     }
 }

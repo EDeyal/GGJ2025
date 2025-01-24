@@ -7,6 +7,7 @@ public class GameManager : MonoSingleton<GameManager>
 {
     [SerializeField] public PlayerManager playerManager;
     [SerializeField] public GridHandler gridHandler;
+    [SerializeField] public UIManager uiManager;
     public bool IsPlayerTurn = true;
     private void Start()
     {
@@ -21,28 +22,53 @@ public class GameManager : MonoSingleton<GameManager>
         }
         if (Input.GetKeyDown(KeyCode.K))
         {
-            playerManager.player.actionPoints++;
+            playerManager.player.RefreshActionPoints();
         }
-        CheckAutoEndTurn();
-        TryEnemyTurn();
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            SwapTurn();
+        }
+        if (IsPlayerTurn)
+        {
+            CheckAutoEndTurn();
+        }
+        else
+        { 
+            TryEnemyTurn();
+        }
+    }
+    public void EndTurnButton()
+    {
+        if (IsPlayerTurn)
+        {
+            SwapTurn();
+        }
     }
     void SwapTurn()
     {
         if (IsPlayerTurn)
         {
-            //enemy start turn
+            //set to not player turn
             IsPlayerTurn = false;
+            playerManager.player.ResetActionPoints();
+            //enemy ui start turn
+            uiManager.SwapTurn(false);
         }
         else
         { 
-            //player start turn
+            //Set to player turn
             IsPlayerTurn=true;
+            playerManager.player.RefreshActionPoints();
+            //player ui start turn
+            uiManager.SwapTurn(true);
         }
+        uiManager.UpdatePlayerActionText(playerManager.player.ActionPoints);
     }
     void CheckAutoEndTurn()
     {
-        if (playerManager.player.actionPoints == 0)
-        { 
+        if (playerManager.player.CheckActionPointsReachedZero())
+        {
+            Debug.Log("Player eneded his turn");
             //player auto turn end
             SwapTurn();
         }

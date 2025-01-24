@@ -4,10 +4,22 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] public int actionPoints;
-    void Start()
+    [SerializeField] public int maxActionPoints;
+    private int _actionPoints = 0;
+    public int ActionPoints {
+        get
+        {
+            return _actionPoints;
+        }
+        set
+        {
+            _actionPoints = value;
+            Debug.Log("Action Points changed" + ActionPoints);
+        }
+        }
+    void Awake()
     {
-
+        RefreshActionPoints();
     }
 
     void Update()
@@ -43,7 +55,7 @@ public class Player : MonoBehaviour
         {
             Debug.LogWarning("Tile " + (transform.position.x + movement.x) + "," + (transform.position.z + movement.z) + " is already occupied or a wall");
         }
-        else if (actionPoints <= 0)
+        else if (ActionPoints <= 0)
         {
             Debug.LogWarning("Out Of ActionPoints");
         }
@@ -54,13 +66,37 @@ public class Player : MonoBehaviour
     }
     private void Move(Vector3 movement)
     {
+        var gm = GameManager.Instance;
         //clear previous position
-        GameManager.Instance.gridHandler.SetIsNodeOccupied((int)transform.position.x,(int)transform.position.z, false);
+        gm.gridHandler.SetIsNodeOccupied((int)transform.position.x,(int)transform.position.z, false);
         //move
         transform.position += movement;
         //set new position occupied
-        GameManager.Instance.gridHandler.SetIsNodeOccupied((int)transform.position.x,(int)transform.position.z, true);
+        gm.gridHandler.SetIsNodeOccupied((int)transform.position.x,(int)transform.position.z, true);
         //reduce action points by 1
-        actionPoints--;
+        ActionPoints -= 1;
+        gm.uiManager.UpdatePlayerActionText(ActionPoints);
+    }
+    public void IncreaseActionPoints(int amount)
+    {
+        maxActionPoints += amount;
+        ActionPoints += amount;
+        GameManager.Instance.uiManager.UpdatePlayerActionText(ActionPoints);
+    }
+    public void RefreshActionPoints()
+    {
+        ActionPoints = maxActionPoints;
+        Debug.Log("refreshed action points");
+        GameManager.Instance.uiManager.UpdatePlayerActionText(ActionPoints);
+    }
+    public void ResetActionPoints()
+    {
+        ActionPoints = 0;
+    }
+    public bool CheckActionPointsReachedZero()
+    {
+        if (ActionPoints == 0)
+            return true;
+        return false;
     }
 }
