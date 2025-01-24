@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
         set
         {
             _actionPoints = value;
-            Debug.Log("Action Points changed" + ActionPoints);
+            //Debug.Log("Action Points changed" + ActionPoints);
         }
         }
     void Awake()
@@ -53,11 +53,11 @@ public class Player : MonoBehaviour
     {
         if (GameManager.Instance.gridHandler.CheckIsNodeOccupied((int)(transform.position.x + movement.x), (int)(transform.position.z + movement.z)))
         {
-            Debug.LogWarning("Tile " + (transform.position.x + movement.x) + "," + (transform.position.z + movement.z) + " is already occupied or a wall");
+            //Debug.LogWarning("Tile " + (transform.position.x + movement.x) + "," + (transform.position.z + movement.z) + " is already occupied or a wall");
         }
         else if (ActionPoints <= 0)
         {
-            Debug.LogWarning("Out Of ActionPoints");
+            //Debug.LogWarning("Out Of ActionPoints");
         }
         else
         {
@@ -86,7 +86,7 @@ public class Player : MonoBehaviour
     public void RefreshActionPoints()
     {
         ActionPoints = maxActionPoints;
-        Debug.Log("refreshed action points");
+        //Debug.Log("refreshed action points");
         GameManager.Instance.uiManager.UpdatePlayerActionText(ActionPoints);
     }
     public void ResetActionPoints()

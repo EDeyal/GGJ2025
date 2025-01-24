@@ -35,10 +35,6 @@ public class GameManager : MonoSingleton<GameManager>
         {
             CheckAutoEndTurn();
         }
-        else
-        { 
-            TryEnemyTurn();
-        }
     }
     public void EndTurnButton()
     {
@@ -56,6 +52,8 @@ public class GameManager : MonoSingleton<GameManager>
             playerManager.player.ResetActionPoints();
             //enemy ui start turn
             uiManager.SwapTurn(false);
+            //Preform enemy turn
+            EnemyTurn();
         }
         else
         { 
@@ -76,10 +74,16 @@ public class GameManager : MonoSingleton<GameManager>
             SwapTurn();
         }
     }
-    void TryEnemyTurn()
+    void EnemyTurn()
     {
-        if (IsPlayerTurn)
-            return;
-        //enemy turn
+        //sort enemies by distance from player
+        enemyManager.SortEnemyList();
+        //grant them action points
+        enemyManager.RefreshActionPoints();
+        //Attack if can
+        enemyManager.EnemyAttack();
+        //move if can
+        enemyManager.EnemyMovement();
+        SwapTurn();
     }
 }
