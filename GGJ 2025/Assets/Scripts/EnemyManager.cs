@@ -59,6 +59,7 @@ public class EnemyManager : MonoBehaviour
         GameManager.Instance.currentWave += 1;
         GameManager.Instance.uiManager.UpdateWave();
         _enemyStrengthToSpawn = _currentEnemyStrength;
+        PlaySpawnEnemySound();
         while (_enemyStrengthToSpawn > 0)
         {
             int randomIndex = Random.Range(0, _enemyTypes.Count);
