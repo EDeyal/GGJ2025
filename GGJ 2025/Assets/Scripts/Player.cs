@@ -143,6 +143,13 @@ public class Player : MonoBehaviour
         // Reduce action points by 1
         ActionPoints -= 1;
         gm.uiManager.UpdatePlayerActionText(ActionPoints);
+
+        if (CheckActionPointsReachedZero())
+        {
+            Debug.Log("Player eneded his turn");
+            //player auto turn end
+            GameManager.Instance.SwapTurn();
+        }
     }
     private IEnumerator SmoothMoveAndRotate(Vector3 targetPosition, Vector3 movement, float duration)
     {
@@ -167,6 +174,7 @@ public class Player : MonoBehaviour
         }
 
         // Ensure the final position and rotation are set accurately
+        Debug.Log("Playermoved");
         transform.position = targetPosition;
         transform.rotation = targetRotation;
         _playerIsMoving = false;

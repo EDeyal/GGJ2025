@@ -61,7 +61,6 @@ public class PlayerManager : MonoBehaviour
             //wait for attack animation before continuing
             StartCoroutine(ExecuteAttackAnimation(enemyPos, SelectedAbility));
 
-            UnselectAbility();
         }
         else
         {
@@ -71,22 +70,32 @@ public class PlayerManager : MonoBehaviour
     }
     private IEnumerator ExecuteAttackAnimation(Vector2 enemyPos, Ability ability)
     {
-        // Get direction towards the enemy
-        Vector3 directionToEnemy = (enemyPos - new Vector2(player.transform.position.x, player.transform.position.z)).normalized;
+        // Calculate direction towards the enemy (on X-Z plane)
+        Vector2 direction = (enemyPos - new Vector2(player.transform.position.x, player.transform.position.z)).normalized;
+        Vector3 directionToEnemy = new Vector3(direction.x,0,direction.y);
 
         // Create a target rotation towards the enemy
         Quaternion targetRotation = Quaternion.LookRotation(directionToEnemy);
 
-        // Smoothly rotate the player towards the target direction (only on the Y-axis)
+        // Debug: Check direction and target rotation
+        Debug.Log("Direction to Enemy: " + directionToEnemy);
+        Debug.Log("Target Rotation: " + targetRotation.eulerAngles);
+
+        // Only rotate if the player is not already facing the target
         while (Quaternion.Angle(player.transform.rotation, targetRotation) > 1f)
         {
-            player.transform.rotation = Quaternion.Slerp(player.transform.rotation, targetRotation, Time.deltaTime * 5f);
+            player.transform.rotation = Quaternion.Slerp(player.transform.rotation, targetRotation, Time.deltaTime * 10f);
 
             // Keep the player's rotation constrained on the Y-axis (to prevent flipping)
             player.transform.rotation = Quaternion.Euler(0, player.transform.rotation.eulerAngles.y, 0);
 
+            // Debug: Log the angle to check if it is reducing
+            Debug.Log("Current Rotation Angle: " + Quaternion.Angle(player.transform.rotation, targetRotation));
+
             yield return null;
         }
+
+        Debug.Log("Rotation Complete");
 
         // Start the attack animation (trigger the animation)
         if (ability.abilityID == 0)
@@ -99,6 +108,14 @@ public class PlayerManager : MonoBehaviour
 
         // After the animation, hit the enemy
         GameManager.Instance.enemyManager.HitEnemy(enemyPos, ability.damage);
+
+        UnselectAbility();
+        if (player.CheckActionPointsReachedZero())
+        {
+            Debug.Log("Player ended his turn");
+            // Player auto turn end
+            GameManager.Instance.SwapTurn();
+        }
     }
     void UnselectAbility()
     {

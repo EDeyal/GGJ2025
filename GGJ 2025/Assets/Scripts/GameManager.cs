@@ -34,10 +34,6 @@ public class GameManager : MonoSingleton<GameManager>
         {
             SwapTurn();
         }
-        if (IsPlayerTurn)
-        {
-            CheckAutoEndTurn();
-        }
     }
     public void EndTurnButton()
     {
@@ -46,8 +42,9 @@ public class GameManager : MonoSingleton<GameManager>
             SwapTurn();
         }
     }
-    void SwapTurn()
+    public void SwapTurn()
     {
+
         if (IsPlayerTurn)
         {
             //set to not player turn
@@ -67,15 +64,6 @@ public class GameManager : MonoSingleton<GameManager>
             uiManager.SwapTurn(true);
         }
         uiManager.UpdatePlayerActionText(playerManager.player.ActionPoints);
-    }
-    void CheckAutoEndTurn()
-    {
-        if (playerManager.player.CheckActionPointsReachedZero())
-        {
-            Debug.Log("Player eneded his turn");
-            //player auto turn end
-            SwapTurn();
-        }
     }
     private IEnumerator EnemyTurnRoutine()
     {
@@ -111,15 +99,11 @@ public class GameManager : MonoSingleton<GameManager>
     public void WaveEnded()
     {
         //set up wave upgrades for level
-        StartCoroutine(WaitForEnemyDeath());
+
         waveUpgradeHandler.AssignUpgrades();
         waveUpgradeHandler.ShowUpgrades(true);
     }
-    IEnumerator WaitForEnemyDeath()
-    {
-        yield return new WaitForSeconds(2);
 
-    }
     public void WaveUpgradeSelected()
     {
         waveUpgradeHandler.ShowUpgrades(false);
