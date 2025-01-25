@@ -59,8 +59,8 @@ public class UIManager : MonoBehaviour
     }
     public void UpdatePlayerHealth()
     {
-        playerHealthText.text = GameManager.Instance.playerManager.player.Health.ToString();
-        playerHealthRegenerationText.text = GameManager.Instance.playerManager.player.HealthRegeneration.ToString();
+        playerHealthText.text = "x " + GameManager.Instance.playerManager.player.Health.ToString();
+        playerHealthRegenerationText.text = "x " + GameManager.Instance.playerManager.player.HealthRegeneration.ToString();
     }
     public void AddAbility(Ability ability, int id)
     {

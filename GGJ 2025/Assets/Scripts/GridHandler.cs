@@ -40,10 +40,11 @@ public class GridHandler : MonoBehaviour
         {
             Destroy(tile.gameObject);
         }
-        foreach (Transform child in _wallGO.transform)
-        {
-            Destroy(child.gameObject);
-        }
+        //Destroy walls
+        //foreach (Transform child in _wallGO.transform)
+        //{
+        //    Destroy(child.gameObject);
+        //}
     }
     public void SpawnFloor()
     {
@@ -57,7 +58,7 @@ public class GridHandler : MonoBehaviour
                 grid[x, y] = gridNode;
             }
         }
-        SpawnWall();
+        //SpawnWall();
     }
     public void SpawnWall()
     {

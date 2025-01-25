@@ -52,6 +52,8 @@ MonoBehaviour:
   isPlayerDead: 0
   abilities: []
   _knifeAnimator: {fileID: 777848940328228456}
+  _bloodEffect: {fileID: 8195822639166019916, guid: 51ead33e9b702cf4ba16aedbff8276af,
+    type: 3}
 --- !u!82 &6619581113926522808
 AudioSource:
   m_ObjectHideFlags: 0

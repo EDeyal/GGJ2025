@@ -18,6 +18,8 @@ public class Player : MonoBehaviour
 
     [SerializeField] Animator _knifeAnimator;
     public Animator KnifeAnimator => _knifeAnimator;
+    [SerializeField] ParticleSystem _bloodEffect;
+
     void Awake()
     {
         abilities = new List<Ability>();
@@ -30,6 +32,11 @@ public class Player : MonoBehaviour
     }
     public void ChangeHealth(int amount)
     {
+        if (amount < 0)
+        {
+           var bloodEffect = Instantiate(_bloodEffect, transform);
+            Destroy(bloodEffect, 2f);
+        }
         if (_health + amount > _maxHealth)
             _health = _maxHealth;
         else if (_health + amount <= 0)
