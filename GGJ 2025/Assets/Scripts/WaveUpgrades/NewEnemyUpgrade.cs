@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NewEnemyUpgrade : WaveUpgrade
 {
-    static bool isUnlocked;
+    public static bool isUnlocked;
     [SerializeField] Enemy enemyPrefab;
 
     public override void Activate()

@@ -102,12 +102,14 @@ public class PlayerManager : MonoBehaviour
         {
             player.KnifeAnimator.SetTrigger("Attack");
         }
+        player.GetComponent<AudioSource>().Play();
 
         // Wait for the animation to complete (you can adjust the duration or wait for a specific animation event)
         yield return new WaitForSeconds(1);
 
         // After the animation, hit the enemy
         GameManager.Instance.enemyManager.HitEnemy(enemyPos, ability.damage);
+
 
         UnselectAbility();
         if (player.CheckActionPointsReachedZero())
