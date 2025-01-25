@@ -77,17 +77,26 @@ public class GameManager : MonoSingleton<GameManager>
             SwapTurn();
         }
     }
-    void EnemyTurn()
+    private IEnumerator EnemyTurnRoutine()
     {
+        yield return new WaitForSeconds(1);
         //sort enemies by distance from player
         enemyManager.SortEnemyList();
         //grant them action points
         enemyManager.RefreshActionPoints();
-        //Attack if can
-        enemyManager.EnemyAttack();
+        bool didAttack = enemyManager.EnemyAttack(); // Modify EnemyAttack to return a bool
+        if (didAttack)
+        {
+            yield return new WaitForSeconds(2); // Wait only if an attack occurred
+        }
         //move if can
         enemyManager.EnemyMovement();
+        yield return new WaitForSeconds(1);
         SwapTurn();
+    }
+        void EnemyTurn()
+    {
+        StartCoroutine(EnemyTurnRoutine());
     }
     public void RestartGame()
     {

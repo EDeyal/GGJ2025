@@ -91,17 +91,20 @@ public class EnemyManager : MonoBehaviour
         }
         return anyHasActionPoints;
     }
-    public void EnemyAttack()
+    public bool EnemyAttack()
     {
+        bool didAttack = false;
         Vector3 playerPos = GameManager.Instance.playerManager.player.transform.position;
         foreach (Enemy enemy in _enemyList)
         { 
             if (Vector3.Distance(enemy.transform.position, playerPos) <= enemy.attackRange)
             {
-                Debug.Log(enemy.gameObject.name + "AttacksPlayer");
+                didAttack = true;
+                //Debug.Log(enemy.gameObject.name + "AttacksPlayer");
                 GameManager.Instance.playerManager.player.ChangeHealth(-enemy.attackDamage);
             }
         }
+        return didAttack;
     }
     public void EnemyMovement()
     {

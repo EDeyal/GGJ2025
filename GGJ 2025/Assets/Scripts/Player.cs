@@ -13,6 +13,8 @@ public class Player : MonoBehaviour
     [SerializeField] private int _maxHealth = 0;
     public bool isPlayerDead;
     public List<Ability> abilities;
+
+    bool _playerIsMoving;
     void Awake()
     {
         abilities = new List<Ability>();
@@ -64,7 +66,8 @@ public class Player : MonoBehaviour
     }
     void CheckforMovement()
     {
-
+        if (_playerIsMoving)
+            return;
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
             if (GameManager.Instance.playerManager.IsAbilitySelected)
@@ -119,6 +122,7 @@ public class Player : MonoBehaviour
     }
     private void Move(Vector3 movement)
     {
+        _playerIsMoving = true;
         var gm = GameManager.Instance;
 
         // Clear previous position
@@ -162,6 +166,7 @@ public class Player : MonoBehaviour
         // Ensure the final position and rotation are set accurately
         transform.position = targetPosition;
         transform.rotation = targetRotation;
+        _playerIsMoving = false;
     }
     public void IncreaseActionPoints(int amount)
     {
