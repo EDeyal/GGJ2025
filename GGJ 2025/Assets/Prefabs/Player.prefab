@@ -50,6 +50,7 @@ MonoBehaviour:
   _maxHealth: 5
   isPlayerDead: 0
   abilities: []
+  _knifeAnimator: {fileID: 777848940328228456}
 --- !u!1 &7943226872251086956
 GameObject:
   m_ObjectHideFlags: 0
@@ -174,7 +175,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 663ee1b5c0800ed4d80cb4a45b810565,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 777848940328228456}
   m_SourcePrefab: {fileID: 100100000, guid: 663ee1b5c0800ed4d80cb4a45b810565, type: 3}
 --- !u!4 &2699405026501268875 stripped
 Transform:
@@ -182,6 +187,34 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2521048138202903136}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &3332072450454409009 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 663ee1b5c0800ed4d80cb4a45b810565,
+    type: 3}
+  m_PrefabInstance: {fileID: 2521048138202903136}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &777848940328228456
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3332072450454409009}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2877370c17105d74381f36bd8503e145, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &5503553368607716073
 PrefabInstance:
   m_ObjectHideFlags: 0

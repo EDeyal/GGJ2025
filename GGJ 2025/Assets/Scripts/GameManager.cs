@@ -111,8 +111,14 @@ public class GameManager : MonoSingleton<GameManager>
     public void WaveEnded()
     {
         //set up wave upgrades for level
+        StartCoroutine(WaitForEnemyDeath());
         waveUpgradeHandler.AssignUpgrades();
         waveUpgradeHandler.ShowUpgrades(true);
+    }
+    IEnumerator WaitForEnemyDeath()
+    {
+        yield return new WaitForSeconds(2);
+
     }
     public void WaveUpgradeSelected()
     {

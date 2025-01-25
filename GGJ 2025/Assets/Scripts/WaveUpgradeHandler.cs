@@ -11,6 +11,18 @@ public class WaveUpgradeHandler : MonoBehaviour
 
     public void ShowUpgrades(bool isTrue)
     {
+        StartCoroutine(WaitForEnemyDeath(isTrue));
+    }
+    IEnumerator WaitForEnemyDeath(bool isTrue)
+    {
+        if (isTrue)
+        {
+            yield return new WaitForSeconds(2);
+        }
+        else
+        { 
+            yield return new WaitForSeconds(0.5f);
+        }
         GameManager.Instance.uiManager.ShowWaveUpgrades(isTrue);
     }
     public void AssignUpgrades()

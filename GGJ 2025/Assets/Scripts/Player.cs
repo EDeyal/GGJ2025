@@ -15,6 +15,9 @@ public class Player : MonoBehaviour
     public List<Ability> abilities;
 
     bool _playerIsMoving;
+
+    [SerializeField] Animator _knifeAnimator;
+    public Animator KnifeAnimator => _knifeAnimator;
     void Awake()
     {
         abilities = new List<Ability>();

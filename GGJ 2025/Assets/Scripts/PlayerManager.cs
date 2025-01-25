@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
@@ -57,7 +58,9 @@ public class PlayerManager : MonoBehaviour
         {
             //Activate cooldowns for the ability
             SelectedAbility.ActivateAbilityCooldown();
-            GameManager.Instance.enemyManager.HitEnemy(enemyPos, SelectedAbility.damage);
+            //wait for attack animation before continuing
+            StartCoroutine(ExecuteAttackAnimation(enemyPos, SelectedAbility));
+
             UnselectAbility();
         }
         else
@@ -65,6 +68,37 @@ public class PlayerManager : MonoBehaviour
             GameManager.Instance.uiManager.NotEnoughActionPointsPopup();
             //UI Manager error for not having enough points
         }
+    }
+    private IEnumerator ExecuteAttackAnimation(Vector2 enemyPos, Ability ability)
+    {
+        // Get direction towards the enemy
+        Vector3 directionToEnemy = (enemyPos - new Vector2(player.transform.position.x, player.transform.position.z)).normalized;
+
+        // Create a target rotation towards the enemy
+        Quaternion targetRotation = Quaternion.LookRotation(directionToEnemy);
+
+        // Smoothly rotate the player towards the target direction (only on the Y-axis)
+        while (Quaternion.Angle(player.transform.rotation, targetRotation) > 1f)
+        {
+            player.transform.rotation = Quaternion.Slerp(player.transform.rotation, targetRotation, Time.deltaTime * 5f);
+
+            // Keep the player's rotation constrained on the Y-axis (to prevent flipping)
+            player.transform.rotation = Quaternion.Euler(0, player.transform.rotation.eulerAngles.y, 0);
+
+            yield return null;
+        }
+
+        // Start the attack animation (trigger the animation)
+        if (ability.abilityID == 0)
+        {
+            player.KnifeAnimator.SetTrigger("Attack");
+        }
+
+        // Wait for the animation to complete (you can adjust the duration or wait for a specific animation event)
+        yield return new WaitForSeconds(1);
+
+        // After the animation, hit the enemy
+        GameManager.Instance.enemyManager.HitEnemy(enemyPos, ability.damage);
     }
     void UnselectAbility()
     {
