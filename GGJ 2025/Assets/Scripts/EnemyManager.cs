@@ -1,7 +1,12 @@
+using Mono.Cecil.Cil;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
+using Random = UnityEngine.Random;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -64,13 +69,21 @@ public class EnemyManager : MonoBehaviour
             }
         }
     }
-
+    
     void SpawnEnemy(Enemy enemyPrefab)
     {
         GridNode node = GameManager.Instance.gridHandler.GetSpawnableEnemyLocation();
         node.isOccupied = true;
-        Enemy enemy = Instantiate(enemyPrefab, new Vector3(node.xPos, 1, node.yPos), Quaternion.identity);
+        Enemy enemy = Instantiate(enemyPrefab, new Vector3(node.xPos, 1, node.yPos), new Quaternion(0,180,0,0));
         _enemyList.Add(enemy);
+    }
+    private void PlaySpawnEnemySound()
+    {
+        AudioSource audioSource = GetComponent<AudioSource>();
+        if (audioSource)
+        {
+            audioSource.Play();
+        }
     }
     public void RefreshActionPoints()
     {
@@ -91,20 +104,84 @@ public class EnemyManager : MonoBehaviour
         }
         return anyHasActionPoints;
     }
+
     public bool EnemyAttack()
     {
         bool didAttack = false;
         Vector3 playerPos = GameManager.Instance.playerManager.player.transform.position;
+
         foreach (Enemy enemy in _enemyList)
-        { 
+        {
+            // Check if the enemy is within attack range
             if (Vector3.Distance(enemy.transform.position, playerPos) <= enemy.attackRange)
             {
                 didAttack = true;
-                //Debug.Log(enemy.gameObject.name + "AttacksPlayer");
-                GameManager.Instance.playerManager.player.ChangeHealth(-enemy.attackDamage);
+                StartCoroutine(AttackEnemy(enemy, playerPos));
             }
         }
+
         return didAttack;
+    }
+    private IEnumerator AttackEnemy(Enemy enemy, Vector3 playerPos)
+    {
+        // Rotate towards the player
+        Vector3 directionToPlayer = (playerPos - enemy.transform.position).normalized;
+        Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
+
+        // Smoothly rotate the enemy towards the player
+        while (Quaternion.Angle(enemy.transform.rotation, targetRotation) > 1f)
+        {
+            enemy.transform.rotation = Quaternion.Slerp(enemy.transform.rotation, targetRotation, Time.deltaTime * 5f);
+            yield return null;
+        }
+
+        // Now that the enemy is facing the player, attack
+        StartCoroutine(AttackAnimation(enemy, directionToPlayer));
+
+
+        // (Optional) Simulate the attack (you can modify this part to suit your needs)
+        GameManager.Instance.playerManager.player.ChangeHealth(-enemy.attackDamage);
+    }
+    private void PlayAttackSound(Enemy enemy)
+    {
+        // Play the sound effect for attack
+        // Example: Assuming the enemy has an AudioSource attached
+        AudioSource audioSource = enemy.gameObject.GetComponent<AudioSource>();
+        if (audioSource)
+        {
+            audioSource.Play();
+        }
+    }
+    private IEnumerator AttackAnimation(Enemy enemy, Vector3 directionToPlayer)
+    {
+        Vector3 initialPosition = enemy.transform.position;
+        Vector3 attackPosition = initialPosition + directionToPlayer * 0.5f; // Move 0.5 units towards the player
+
+        // Move towards the player
+        float attackSpeed = 2f; // Adjust this value to control the speed of movement
+        float elapsedTime = 0f;
+        while (elapsedTime < 0.2f) // Adjust the duration for the forward movement
+        {
+            enemy.transform.position = Vector3.Lerp(initialPosition, attackPosition, elapsedTime / 0.2f);
+            elapsedTime += Time.deltaTime * attackSpeed;
+            yield return null;
+        }
+
+        // Snap to attack position
+        enemy.transform.position = attackPosition;
+        // Play attack sound here
+        PlayAttackSound(enemy);
+        // Move back to the original position
+        elapsedTime = 0f;
+        while (elapsedTime < 0.2f) // Adjust the duration for the backward movement
+        {
+            enemy.transform.position = Vector3.Lerp(attackPosition, initialPosition, elapsedTime / 0.2f);
+            elapsedTime += Time.deltaTime * attackSpeed;
+            yield return null;
+        }
+
+        // Snap back to the original position
+        enemy.transform.position = initialPosition;
     }
     public void EnemyMovement()
     {
