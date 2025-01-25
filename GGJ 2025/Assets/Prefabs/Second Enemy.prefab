@@ -51,6 +51,8 @@ MonoBehaviour:
   attackRange: 1
   attackDamage: 2
   _maxHealth: 3
+  _bloodEffect: {fileID: 8689302315990428718, guid: 1e5504565302db448a0d88458b45cd72,
+    type: 3}
 --- !u!1 &5720994717350117712
 GameObject:
   m_ObjectHideFlags: 0

@@ -52,6 +52,8 @@ MonoBehaviour:
   attackRange: 1
   attackDamage: 1
   _maxHealth: 1
+  _bloodEffect: {fileID: 8195822639166019916, guid: 51ead33e9b702cf4ba16aedbff8276af,
+    type: 3}
 --- !u!82 &6558093508020349883
 AudioSource:
   m_ObjectHideFlags: 0

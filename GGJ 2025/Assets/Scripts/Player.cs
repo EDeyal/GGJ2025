@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
     {
         if (amount < 0)
         {
-           var bloodEffect = Instantiate(_bloodEffect, transform);
+           var bloodEffect = Instantiate(_bloodEffect,new Vector3(transform.position.x,transform.position.y,transform.position.z),Quaternion.identity);
             Destroy(bloodEffect, 2f);
         }
         if (_health + amount > _maxHealth)

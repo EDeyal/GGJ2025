@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
    [SerializeField] public int attackDamage = 1;
    private int _health;
    [SerializeField] private int _maxHealth;
+   [SerializeField] ParticleSystem _bloodEffect;
 
     private void Awake()
     {
@@ -93,6 +94,12 @@ public class Enemy : MonoBehaviour
     }
     public void ChangeHealth(int amount)
     {
+        if (amount < 0)
+        {
+            var bloodEffect = Instantiate(_bloodEffect, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
+            Destroy(bloodEffect, 2f);
+        }
+
         if (_health + amount > _maxHealth)
             _health = _maxHealth;
         else if (_health + amount <= 0)
