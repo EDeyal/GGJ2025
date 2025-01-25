@@ -3,12 +3,7 @@ guid: dacb56adb37723c4bb8d615624da90f1
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Zombie Mat
-    second: {fileID: 2100000, guid: ce22b1e76af619e4cbeab30fe7a57c0c, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
