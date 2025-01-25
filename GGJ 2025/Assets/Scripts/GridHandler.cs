@@ -6,6 +6,8 @@ using UnityEngine;
 public class GridHandler : MonoBehaviour
 {
     [SerializeField] GameObject floorGO;
+    [SerializeField] GameObject _wallGO;
+    [SerializeField] GameObject _wallPrefab;
     [SerializeField] public GridNode floorPrefab;
     [SerializeField] public int gridMaxX;
     [SerializeField] public int gridMaxY;
@@ -38,6 +40,10 @@ public class GridHandler : MonoBehaviour
         {
             Destroy(tile.gameObject);
         }
+        foreach (Transform child in _wallGO.transform)
+        {
+            Destroy(child.gameObject);
+        }
     }
     public void SpawnFloor()
     {
@@ -51,8 +57,27 @@ public class GridHandler : MonoBehaviour
                 grid[x, y] = gridNode;
             }
         }
+        SpawnWall();
     }
-
+    public void SpawnWall()
+    {
+        for (int x = 0; x < gridMaxX; x++)
+        {
+            for (int y = 0; y < gridMaxY; y++)
+            {
+                if (x == 0)
+                {
+                    Instantiate(_wallPrefab, new Vector3(x-0.65f, 2, y), Quaternion.identity, _wallGO.transform);
+                    //spawnSideWall
+                }
+                if (y == gridMaxY - 1)
+                {
+                    Instantiate(_wallPrefab, new Vector3(x, 2, y+0.65f), transform.rotation = Quaternion.Euler(0, 90, 0), _wallGO.transform);
+                    //spwanBackWall
+                }
+            }
+        }
+    }
     public bool CheckIsNodeOccupied(int x, int y)
     {
         if (x < 0 || x >= gridMaxX || y < 0 || y >= gridMaxY)
